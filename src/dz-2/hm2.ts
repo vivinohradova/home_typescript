@@ -22,7 +22,7 @@ class School {
         this._lecturers.push(newLecturer);
     }
     removeLecturer(deletedLecturer: Lecturer): void {
-        this._lecturers = this._lecturers.filter((lecturer) => lecturer !== deletedLecturer)
+        this._lecturers = this._lecturers.filter((lecturer) => lecturer.name !== deletedLecturer.name)
     }
 }
 
@@ -129,7 +129,7 @@ class Group {
     }
 
     removeStudent(deletedStudent: Student): void {
-        this._students = this._students.filter((student) => student !== deletedStudent)
+        this._students = this._students.filter((student: Student) => student._firstName !== deletedStudent._firstName)
     }
 
     setStatus(newStatus: string): void {
@@ -137,7 +137,7 @@ class Group {
     }
 
     showPerformance(): Student[] {
-        const sortedStudents = [...this._students].toSorted((a, b) => b.getPerformanceRating() - a.getPerformanceRating());
+        const sortedStudents = this._students.toSorted((a, b) => b.getPerformanceRating() - a.getPerformanceRating());
         return sortedStudents;
     }
 }
