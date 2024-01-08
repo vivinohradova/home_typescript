@@ -7,15 +7,22 @@ interface Calculator {
 
 }
 
+enum Actions {
+    add = 'add',
+    subtract = "subtract",
+    multiply = 'multiply',
+    division = 'division'
+}
+
 const calculate = (calculator: Calculator, operation: string, a: number, b: number): number => {
     switch (operation) {
-        case 'add':
+        case Actions.add:
             return calculator.add(a, b);
-        case 'subtract':
+        case Actions.subtract:
             return calculator.subtract(a, b);
-        case 'multiply':
+        case Actions.multiply:
             return calculator.multiply(a, b);
-        case 'division':
+        case Actions.division:
             return calculator.division(a, b);
         default: throw new Error('Error operation!')
 
@@ -29,7 +36,7 @@ const calculator: Calculator = {
     division: (a, b) => a / b,
 };
 
-const result = calculate(calculator, 'add', 10, 25);
+const result = calculate(calculator, Actions.add, 10, 25);
 console.log(result);
 
 // 2
