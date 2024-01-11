@@ -1,7 +1,8 @@
 abstract class Shape {
     constructor(readonly color: string, readonly name: string) { }
 
-    abstract calculateArea(): number
+    abstract calculateArea(): number;
+    print?(): void;
 }
 
 class Circle extends Shape {
@@ -48,5 +49,3 @@ class Triangle extends Shape {
         return (this.baseLength * this.height) / 2;
     }
 }
-
-
