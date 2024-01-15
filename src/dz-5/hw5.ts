@@ -1,7 +1,14 @@
-abstract class Shape {
+interface ShapeInterface {
+    color: string;
+    name: string;
+    calculateArea(): number;
+    print?(): void;
+}
+
+abstract class Shape implements ShapeInterface {
     constructor(readonly color: string, readonly name: string) { }
 
-    abstract calculateArea(): number
+    abstract calculateArea(): number;
 }
 
 class Circle extends Shape {
