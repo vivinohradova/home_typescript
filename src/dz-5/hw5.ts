@@ -1,11 +1,4 @@
-interface ShapeInterface {
-    color: string;
-    name: string;
-    calculateArea(): number;
-    print?(): void;
-}
-
-abstract class Shape implements ShapeInterface {
+abstract class Shape{
     constructor(readonly color: string, readonly name: string) { }
 
     abstract calculateArea(): number;
