@@ -1,25 +1,14 @@
 
-type ReplacementInfo = {
-    reason: string;
-    alternativeMethod: string;
-};
-
-function DeprecatedMethod<T, A extends any[], R>(
-    originalMethod: (...args: A) => R,
-    context: ClassMethodDecoratorContext<T, (...args: A) => R>,
-    replacementInfo: ReplacementInfo
-) {
-    if (context.kind !== 'method') throw new Error('Method-only decorator');
-    function replacementMethod(this: T, ...args: A): R {
-        console.warn(
-            `${String(
-                context.name
-            )} is deprecated: ${replacementInfo.reason}. Use ${replacementInfo.alternativeMethod} instead.`
-        )
-        return originalMethod.apply(this, args)
-    }
-    return replacementMethod;
+function DeprecatedMethod(reason: string, alternativeMethod?: string) {
+    return function(_target: any, propertyKey: string, _descriptor: PropertyDescriptor) {
+        console.warn(`Method "${propertyKey}" is deprecated: ${reason}`);
+        if (alternativeMethod) {
+            console.warn(`You can use "${alternativeMethod}" instead.`);
+        }
+    };
 }
+
+
 
 function MinLength(min: number) {
     return function (target: any, key: string) {
@@ -92,3 +81,27 @@ function Email(target: any, key: string) {
         configurable: true,
     });
 }
+
+
+class User {
+    @DeprecatedMethod("This method is deprecated due to security vulnerabilities", "newMethod")
+    updateEmailAddress(email: string) {
+        console.log(`Updating email address to: ${email}`);
+    }
+
+    @MinLength(6)
+    @MaxLength(20)
+    username: string = "";
+
+    @Email
+    email: string ="";
+}
+
+const user = new User();
+user.updateEmailAddress("test@example.com");
+user.username = "user123";
+user.email = "invalid-email";
+
+//Method "updateEmailAddress" is deprecated: This method is deprecated due to security vulnerabilities
+// You can use "newMethod" instead.
+// Updating email address to: test@example.com
