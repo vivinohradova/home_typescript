@@ -1,6 +1,6 @@
 // 1
 
-function exampleFunction(param: boolean): void {}
+function exampleFunction(param: boolean): void { }
 
 type ResultType<T> = T extends (param: infer U) => void ? U : undefined;
 
